@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Litoral Rental — Gerenciador de Temporada</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏖️</text></svg>">
+</head>
+<body>
+
+  <!-- =================== SIDEBAR DE NAVEGAÇÃO =================== -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="logo-icon">🏖️</span>
+      <div class="logo-text">
+        <h1>Litoral Rental</h1>
+        <p>Gerenciador de Temporada</p>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="dashboard">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Dashboard</span>
+      </a>
+      <a href="#" class="nav-item" data-section="imoveis">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Imóveis</span>
+      </a>
+      <a href="#" class="nav-item" data-section="reservas">
+        <span class="nav-icon">📅</span>
+        <span class="nav-label">Reservas</span>
+      </a>
+      <a href="#" class="nav-item" data-section="calendario">
+        <span class="nav-icon">🗓️</span>
+        <span class="nav-label">Calendário</span>
+      </a>
+      <a href="#" class="nav-item" data-section="limpeza">
+        <span class="nav-icon">🧹</span>
+        <span class="nav-label">Limpeza</span>
+      </a>
+      <a href="#" class="nav-item" data-section="insumos">
+        <span class="nav-icon">📦</span>
+        <span class="nav-label">Insumos</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- =================== ÁREA PRINCIPAL =================== -->
+  <main class="main-content">
+
+    <!-- ===== DASHBOARD ===== -->
+    <section id="section-dashboard" class="section active">
+      <div class="section-header">
+        <h2>Dashboard</h2>
+        <p class="section-subtitle">Visão geral das suas propriedades</p>
+      </div>
+
+      <div class="stats-grid" id="stats-grid">
+        <!-- Preenchido via JS (Dashboard.renderizar) -->
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-header">
+            <h3>📅 Próximas Chegadas</h3>
+          </div>
+          <div class="card-body" id="proximas-chegadas">
+            <!-- Preenchido via JS -->
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>🧹 Limpezas Pendentes</h3>
+          </div>
+          <div class="card-body" id="limpezas-pendentes-dash">
+            <!-- Preenchido via JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== IMÓVEIS ===== -->
+    <section id="section-imoveis" class="section">
+      <div class="section-header">
+        <h2>Imóveis</h2>
+        <p class="section-subtitle">Gerencie suas propriedades de temporada</p>
+        <button class="btn btn-primary" onclick="Imoveis.abrirModal()">+ Novo Imóvel</button>
+      </div>
+
+      <div class="cards-grid" id="lista-imoveis">
+        <!-- Preenchido via JS (Imoveis.renderizar) -->
+      </div>
+    </section>
+
+    <!-- ===== RESERVAS ===== -->
+    <section id="section-reservas" class="section">
+      <div class="section-header">
+        <h2>Reservas</h2>
+        <p class="section-subtitle">Gerencie as reservas de temporada</p>
+        <button class="btn btn-primary" onclick="Reservas.abrirModal()">+ Nova Reserva</button>
+      </div>
+
+      <div class="filter-bar">
+        <select id="filtro-imovel-reserva" onchange="Reservas.renderizar()">
+          <option value="">Todos os imóveis</option>
+        </select>
+        <select id="filtro-status-reserva" onchange="Reservas.renderizar()">
+          <option value="">Qualquer status</option>
+          <option value="futura">Futuras</option>
+          <option value="ativa">Em andamento</option>
+          <option value="passada">Concluídas</option>
+        </select>
+      </div>
+
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Hóspede</th>
+              <th>Imóvel</th>
+              <th>Entrada</th>
+              <th>Saída</th>
+              <th>Noites</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-reservas">
+            <!-- Preenchido via JS (Reservas.renderizar) -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== CALENDÁRIO ===== -->
+    <section id="section-calendario" class="section">
+      <div class="section-header">
+        <h2>Calendário de Ocupação</h2>
+        <p class="section-subtitle">Visualize a ocupação dos imóveis por mês</p>
+      </div>
+
+      <div class="calendario-controls">
+        <button class="btn btn-outline" onclick="Calendario.mesAnterior()">◀ Anterior</button>
+        <h3 id="calendario-titulo">—</h3>
+        <button class="btn btn-outline" onclick="Calendario.proximoMes()">Próximo ▶</button>
+      </div>
+
+      <div class="calendario-legenda" id="calendario-legenda">
+        <!-- Preenchido via JS (Calendario.renderizar) -->
+      </div>
+
+      <div class="calendario-grid" id="calendario-grid">
+        <!-- Preenchido via JS (Calendario.renderizar) -->
+      </div>
+    </section>
+
+    <!-- ===== LIMPEZA ===== -->
+    <section id="section-limpeza" class="section">
+      <div class="section-header">
+        <h2>Controle de Limpeza</h2>
+        <p class="section-subtitle">Acompanhe o status de limpeza após cada reserva</p>
+      </div>
+
+      <div class="filter-bar">
+        <button class="btn btn-outline active-filter" data-limpeza-filtro="todos"
+          onclick="Limpeza.filtrar('todos', this)">Todos</button>
+        <button class="btn btn-outline" data-limpeza-filtro="pendente"
+          onclick="Limpeza.filtrar('pendente', this)">🔴 Pendentes</button>
+        <button class="btn btn-outline" data-limpeza-filtro="realizada"
+          onclick="Limpeza.filtrar('realizada', this)">🟢 Realizadas</button>
+      </div>
+
+      <div class="cards-grid" id="lista-limpeza">
+        <!-- Preenchido via JS (Limpeza.renderizar) -->
+      </div>
+    </section>
+
+    <!-- ===== INSUMOS ===== -->
+    <section id="section-insumos" class="section">
+      <div class="section-header">
+        <h2>Controle de Insumos</h2>
+        <p class="section-subtitle">Acompanhe o estoque de produtos das propriedades</p>
+        <button class="btn btn-primary" onclick="Insumos.abrirModal()">+ Novo Insumo</button>
+      </div>
+
+      <div class="filter-bar">
+        <select id="filtro-imovel-insumo" onchange="Insumos.renderizar()">
+          <option value="">Todos os imóveis</option>
+        </select>
+      </div>
+
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Quantidade</th>
+              <th>Unidade</th>
+              <th>Imóvel</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-insumos">
+            <!-- Preenchido via JS (Insumos.renderizar) -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =================== MODAIS =================== -->
+
+  <!-- Modal: Imóvel -->
+  <div class="modal-overlay" id="modal-imovel">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-imovel-titulo">Novo Imóvel</h3>
+        <button class="modal-close" onclick="Imoveis.fecharModal()">✕</button>
+      </div>
+      <form id="form-imovel" onsubmit="Imoveis.salvar(event)">
+        <input type="hidden" id="imovel-id">
+        <div class="form-group">
+          <label for="imovel-nome">Nome do Imóvel *</label>
+          <input type="text" id="imovel-nome" placeholder="Ex: Casa Azul" required>
+        </div>
+        <div class="form-group">
+          <label for="imovel-endereco">Endereço</label>
+          <input type="text" id="imovel-endereco" placeholder="Ex: Rua das Conchas, 10 — Praia do Forte">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="imovel-quartos">Quartos</label>
+            <input type="number" id="imovel-quartos" min="1" value="2">
+          </div>
+          <div class="form-group">
+            <label for="imovel-capacidade">Capacidade (pessoas)</label>
+            <input type="number" id="imovel-capacidade" min="1" value="4">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="imovel-descricao">Descrição</label>
+          <textarea id="imovel-descricao" rows="3" placeholder="Características do imóvel..."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="Imoveis.fecharModal()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Reserva -->
+  <div class="modal-overlay" id="modal-reserva">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-reserva-titulo">Nova Reserva</h3>
+        <button class="modal-close" onclick="Reservas.fecharModal()">✕</button>
+      </div>
+      <form id="form-reserva" onsubmit="Reservas.salvar(event)">
+        <input type="hidden" id="reserva-id">
+        <div class="form-group">
+          <label for="reserva-imovel">Imóvel *</label>
+          <select id="reserva-imovel" required>
+            <option value="">Selecione o imóvel</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="reserva-hospede">Nome do Hóspede *</label>
+          <input type="text" id="reserva-hospede" placeholder="Nome completo" required>
+        </div>
+        <div class="form-group">
+          <label for="reserva-telefone">Telefone</label>
+          <input type="tel" id="reserva-telefone" placeholder="(00) 00000-0000">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="reserva-entrada">Data de Entrada *</label>
+            <input type="date" id="reserva-entrada" required>
+          </div>
+          <div class="form-group">
+            <label for="reserva-saida">Data de Saída *</label>
+            <input type="date" id="reserva-saida" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reserva-obs">Observações</label>
+          <textarea id="reserva-obs" rows="2" placeholder="Informações adicionais..."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="Reservas.fecharModal()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Insumo -->
+  <div class="modal-overlay" id="modal-insumo">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-insumo-titulo">Novo Insumo</h3>
+        <button class="modal-close" onclick="Insumos.fecharModal()">✕</button>
+      </div>
+      <form id="form-insumo" onsubmit="Insumos.salvar(event)">
+        <input type="hidden" id="insumo-id">
+        <div class="form-group">
+          <label for="insumo-produto">Produto *</label>
+          <input type="text" id="insumo-produto" placeholder="Ex: Papel Higiênico" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="insumo-quantidade">Quantidade *</label>
+            <input type="number" id="insumo-quantidade" min="0" value="1" required>
+          </div>
+          <div class="form-group">
+            <label for="insumo-unidade">Unidade</label>
+            <input type="text" id="insumo-unidade" placeholder="Ex: rolos, litros, peças">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="insumo-imovel">Imóvel (opcional)</label>
+          <select id="insumo-imovel">
+            <option value="">Geral / Sem imóvel específico</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="Insumos.fecharModal()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast de notificação (feedback visual) -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Scripts: a ordem importa! data → utils → módulos → app -->
+  <script src="js/data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/imoveis.js"></script>
+  <script src="js/reservas.js"></script>
+  <script src="js/calendario.js"></script>
+  <script src="js/limpeza.js"></script>
+  <script src="js/insumos.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
